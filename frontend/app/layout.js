@@ -2,6 +2,8 @@ import localFont from "next/font/local";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { AppProvider } from "@/AppContext";
+import Footer from "@/components/home/Footer";
 
 const font = Poppins({
   weight: "400",
@@ -15,11 +17,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${font.className}  mx-[40px]`}>
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <AppProvider>
+      <html lang="en">
+        <body className={`${font.className}  lg:px-[60px] px-5`}>
+          <Navbar />
+          {children}
+          <Footer />
+        </body>
+      </html>
+    </AppProvider>
   );
 }

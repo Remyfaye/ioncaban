@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import Icon from "./Icons";
 import ButtonComponent from "./ButtonComponent";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const nav = [
   {
     name: "Home",
-    route: "home",
+    route: "/",
   },
   {
     name: "Buy",
@@ -27,24 +29,33 @@ const nav = [
 ];
 
 const Navbar = () => {
+  const pathname = usePathname();
+
+  if (pathname.includes("/login")) {
+    return null;
+  }
+  if (pathname.includes("/signup")) {
+    return null;
+  }
   const [active, setActive] = useState("home");
   return (
-    <div className="flex justify-between py-5 items-center text-primary">
+    <div className="fixed w-full bg-white mb-10 -mx-[60px] px-[60px]   flex justify-between py-5 items-center text-primary">
       <Icon url="/logo.png" />
-      <div className="flex gap-5">
+      <div className="lg:flex gap-5 hidden">
         {nav.map((item, index) => (
-          <p
+          <Link
             key={index}
+            href={item.route}
             className={`${
-              active === item.route && "text-gray-300"
+              active === item.route && "text-secondary"
             } cursor-pointer`}
             onClick={() => setActive(item.route)}
           >
             {item.name}
-          </p>
+          </Link>
         ))}
       </div>
-      <div className="flex gap-[8px]">
+      <div className="lg:flex gap-[8px] hidden">
         <ButtonComponent text="Log in" />
         <ButtonComponent trans text="Sign up" />
       </div>
